@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Exemplo de leitura de CSV em JavaScript</title>
+</head>
+<body>
+
+  <input type="file" id="fileInput">
+  <div id="output"></div>
+
+  <script>
+    // Função para ler o arquivo CSV
+    function readCSV(file) {
+      let reader = new FileReader();
+      reader.readAsText(file);
+      reader.onload = function(event) {
+        let csvData = event.target.result;
+        printCSV(csvData);
+      };
+    }
+
+    // Função para imprimir o CSV na tela
+    function printCSV(csvData) {
+      let lines = csvData.split('\n');
+      let outputDiv = document.getElementById('output');
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].split(',');
+        let lineHTML = '';
+        for (let j = 0; j < line.length; j++) {
+          lineHTML += line[j] + '&nbsp;&nbsp;&nbsp;&nbsp;';
+        }
+        outputDiv.innerHTML += lineHTML + '<br>';
+      }
+    }
+
+    // Adiciona um evento ao input de arquivo
+    let fileInput = document.getElementById('fileInput');
+    fileInput.addEventListener('change', function(event) {
+      let file = event.target.files[0];
+      readCSV(file);
+    });
+  </script>
+
+</body>
+</html>
